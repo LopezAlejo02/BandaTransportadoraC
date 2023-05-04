@@ -11,8 +11,8 @@
 #define	LCD_H
 
 //Configuracion de pines
-#define RS LATBbits.LATB14
-#define E  LATBbits.LATB15
+#define RS LATBbits.LATB10
+#define E  LATBbits.LATB11
 #define D4 LATBbits.LATB0
 #define D5 LATBbits.LATB1
 #define D6 LATBbits.LATB2

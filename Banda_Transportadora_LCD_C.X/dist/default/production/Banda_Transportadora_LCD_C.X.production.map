@@ -120,12 +120,12 @@ Default Scalar Model: Small
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xe8e          0x15d5  (5589)
-.const                      0x108e                0x4e            0x75  (117)
-.text                       0x10dc               0x5b6           0x891  (2193)
-.dinit                      0x1692                0x28            0x3c  (60)
-.init.delay32               0x16ba                0x1c            0x2a  (42)
+.const                      0x108e                0x8c            0xd2  (210)
+.text                       0x111a               0x8a4           0xcf6  (3318)
+.dinit                      0x19be                0x28            0x3c  (60)
+.init.delay32               0x19e6                0x1c            0x2a  (42)
 
-                 Total "program" memory used (bytes):         0x1f41  (8001) 12%
+                 Total "program" memory used (bytes):         0x2403  (9219) 14%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -197,39 +197,44 @@ External Symbols in Program Memory (by address):
                   0x000d90                  ___pop_ptr
                   0x000e04                  ___extendsfdf2
                   0x000e42                  __funpack
-                  0x000e6c                  ___mulsi3
                   0x000e6c                  ___mulp32peds3
+                  0x000e6c                  ___mulsi3
                   0x000e6c                  ___mulp32eds3
                   0x000ec4                  ___udivmoddi3
                   0x000fbc                  ___udivdi3
                   0x000fca                  ___umoddi3
                   0x000fd2                  ___divdi3
                   0x001032                  ___moddi3
-                  0x0010dc                  _initTimer1
-                  0x001168                  _initTimer2
-                  0x0011f4                  _initAdc1
-                  0x00120a                  _calcDutyPwm
-                  0x00123e                  _leerAdc
-                  0x00126a                  _calcularTProm
-                  0x00129a                  _incrementar
-                  0x0012a6                  _Mode
-                  0x00133a                  _main
-                  0x0014c4                  _sendData
-                  0x0015be                  _onLcd
-                  0x0015d8                  _initLcd
-                  0x0015f2                  _clearLcd
-                  0x0015fe                  _goTo
-                  0x00163e                  _sendStr
-                  0x001672                  _sendNum
-                  0x0016ba                  ___delay32
+                  0x00111a                  _initTimer1
+                  0x0011a6                  _initTimer2
+                  0x001232                  _initTimer3
+                  0x0012be                  _initTimer4
+                  0x00132e                  _initAdc1
+                  0x001344                  _initPwm
+                  0x001368                  _cambiarDuty
+                  0x001378                  _calcDutyPwm
+                  0x0013ac                  _leerAdc
+                  0x0013d8                  _calcularTProm
+                  0x001408                  _incrementar
+                  0x001414                  _incrementarColor
+                  0x001456                  _Mode
+                  0x0015a0                  _main
+                  0x0017f0                  _sendData
+                  0x0018ea                  _onLcd
+                  0x001904                  _initLcd
+                  0x00191e                  _clearLcd
+                  0x00192a                  _goTo
+                  0x00196a                  _sendStr
+                  0x00199e                  _sendNum
+                  0x0019e6                  ___delay32
 
 External Symbols in Program Memory (by name):
 
-                  0x0012a6                  _Mode
+                  0x001456                  _Mode
                   0x0002da                  __DefaultInterrupt
                   0x0002c8                  __T1Interrupt
                   0x0004a4                  ___cvt_u
-                  0x0016ba                  ___delay32
+                  0x0019e6                  ___delay32
                   0x000fd2                  ___divdi3
                   0x0002e0                  ___divsi3
                   0x000e04                  ___extendsfdf2
@@ -264,23 +269,28 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
                   0x000c38                  _atoi
-                  0x00120a                  _calcDutyPwm
-                  0x00126a                  _calcularTProm
-                  0x0015f2                  _clearLcd
-                  0x0015fe                  _goTo
-                  0x00129a                  _incrementar
-                  0x0011f4                  _initAdc1
-                  0x0015d8                  _initLcd
-                  0x0010dc                  _initTimer1
-                  0x001168                  _initTimer2
-                  0x00123e                  _leerAdc
-                  0x00133a                  _main
+                  0x001378                  _calcDutyPwm
+                  0x0013d8                  _calcularTProm
+                  0x001368                  _cambiarDuty
+                  0x00191e                  _clearLcd
+                  0x00192a                  _goTo
+                  0x001408                  _incrementar
+                  0x001414                  _incrementarColor
+                  0x00132e                  _initAdc1
+                  0x001904                  _initLcd
+                  0x001344                  _initPwm
+                  0x00111a                  _initTimer1
+                  0x0011a6                  _initTimer2
+                  0x001232                  _initTimer3
+                  0x0012be                  _initTimer4
+                  0x0013ac                  _leerAdc
+                  0x0015a0                  _main
                   0x000aba                  _memcpy
                   0x000ac8                  _memset
-                  0x0015be                  _onLcd
-                  0x0014c4                  _sendData
-                  0x001672                  _sendNum
-                  0x00163e                  _sendStr
+                  0x0018ea                  _onLcd
+                  0x0017f0                  _sendData
+                  0x00199e                  _sendNum
+                  0x00196a                  _sendStr
                   0x000b8e                  _strlen
                   0x000c84                  _tolower
                   0x000c92                  _toupper
@@ -489,46 +499,46 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x139d
+.debug_info       0x000000       0x19c8
  *(.debug_info)
- .debug_info      0x000000        0xcd6 build/default/production/main.o
- .debug_info      0x000cd6        0x405 build/default/production/LCD.o
- .debug_info      0x0010db         0x8c f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
- .debug_info      0x001167         0x8d f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
- .debug_info      0x0011f4         0x90 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
- .debug_info      0x001284         0x8d f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
- .debug_info      0x001311         0x8c f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
+ .debug_info      0x000000       0x1301 build/default/production/main.o
+ .debug_info      0x001301        0x405 build/default/production/LCD.o
+ .debug_info      0x001706         0x8c f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
+ .debug_info      0x001792         0x8d f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
+ .debug_info      0x00181f         0x90 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
+ .debug_info      0x0018af         0x8d f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+ .debug_info      0x00193c         0x8c f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x2e4
+.debug_abbrev     0x000000        0x317
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x1a1 build/default/production/main.o
- .debug_abbrev    0x0001a1         0xdf build/default/production/LCD.o
- .debug_abbrev    0x000280         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
- .debug_abbrev    0x000294         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
- .debug_abbrev    0x0002a8         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
- .debug_abbrev    0x0002bc         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
- .debug_abbrev    0x0002d0         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
+ .debug_abbrev    0x000000        0x1d4 build/default/production/main.o
+ .debug_abbrev    0x0001d4         0xdf build/default/production/LCD.o
+ .debug_abbrev    0x0002b3         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
+ .debug_abbrev    0x0002c7         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
+ .debug_abbrev    0x0002db         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
+ .debug_abbrev    0x0002ef         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+ .debug_abbrev    0x000303         0x14 f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
 
-.debug_line       0x000000        0x3cf
+.debug_line       0x000000        0x44e
  *(.debug_line)
- .debug_line      0x000000        0x170 build/default/production/main.o
- .debug_line      0x000170         0xfa build/default/production/LCD.o
- .debug_line      0x00026a         0x43 f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
- .debug_line      0x0002ad         0x45 f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
- .debug_line      0x0002f2         0x59 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
- .debug_line      0x00034b         0x4a f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
- .debug_line      0x000395         0x3a f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
+ .debug_line      0x000000        0x1ef build/default/production/main.o
+ .debug_line      0x0001ef         0xfa build/default/production/LCD.o
+ .debug_line      0x0002e9         0x43 f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
+ .debug_line      0x00032c         0x45 f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
+ .debug_line      0x000371         0x59 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
+ .debug_line      0x0003ca         0x4a f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+ .debug_line      0x000414         0x3a f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
 
-.debug_frame      0x000000        0x1fa
+.debug_frame      0x000000        0x27c
  *(.debug_frame)
- .debug_frame     0x000000        0x122 build/default/production/main.o
- .debug_frame     0x000122         0xd8 build/default/production/LCD.o
+ .debug_frame     0x000000        0x1a4 build/default/production/main.o
+ .debug_frame     0x0001a4         0xd8 build/default/production/LCD.o
 
-.debug_str        0x000000         0xb8
+.debug_str        0x000000        0x13c
  *(.debug_str)
- .debug_str       0x000000         0xaf build/default/production/main.o
- .debug_str       0x0000af          0x9 build/default/production/LCD.o
+ .debug_str       0x000000        0x133 build/default/production/main.o
+ .debug_str       0x000133          0x9 build/default/production/LCD.o
 
 .debug_loc
  *(.debug_loc)
@@ -537,12 +547,12 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x10e
+                  0x000000        0x15d
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0xab build/default/production/main.o
+                  0x000000         0xfa build/default/production/main.o
  .debug_pubnames
-                  0x0000ab         0x63 build/default/production/LCD.o
+                  0x0000fa         0x63 build/default/production/LCD.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1392,76 +1402,76 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x0000a8        0x115
+                  0x0000a8        0x172
  .debug_pubtypes
-                  0x0000a8         0xd9 build/default/production/main.o
+                  0x0000a8        0x136 build/default/production/main.o
  .debug_pubtypes
-                  0x000181         0x3c build/default/production/LCD.o
+                  0x0001de         0x3c build/default/production/LCD.o
 
 __c30_signature
-                  0x0001bd         0xba
+                  0x00021a         0xba
  __c30_signature
-                  0x0001bd          0x6 build/default/production/main.o
+                  0x00021a          0x6 build/default/production/main.o
  __c30_signature
-                  0x0001c3          0x6 build/default/production/LCD.o
+                  0x000220          0x6 build/default/production/LCD.o
  __c30_signature
-                  0x0001c9          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(crt0_standard.o)
+                  0x000226          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x0001cf          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(data_init_standard.o)
+                  0x00022c          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x0001d5          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(delay32.Meo)
+                  0x000232          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(delay32.Meo)
  __c30_signature
-                  0x0001db          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
+                  0x000238          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(divsi3.XX_o)
  __c30_signature
-                  0x0001e1          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
+                  0x00023e          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(udivsi3.XX_o)
  __c30_signature
-                  0x0001e7          0x6 f:/bin/bin/../../lib\libc99-elf.a(__sio_sprintf_doux.XX_o)
+                  0x000244          0x6 f:/bin/bin/../../lib\libc99-elf.a(__sio_sprintf_doux.XX_o)
  __c30_signature
-                  0x0001ed          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_d.XX_o)
+                  0x00024a          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_d.XX_o)
  __c30_signature
-                  0x0001f3          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_o.XX_o)
+                  0x000250          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_o.XX_o)
  __c30_signature
-                  0x0001f9          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_s.XX_o)
+                  0x000256          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_s.XX_o)
  __c30_signature
-                  0x0001ff          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_u.XX_o)
+                  0x00025c          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_u.XX_o)
  __c30_signature
-                  0x000205          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_x.XX_o)
+                  0x000262          0x6 f:/bin/bin/../../lib\libc99-elf.a(__fmt_x.XX_o)
  __c30_signature
-                  0x00020b          0x6 f:/bin/bin/../../lib\libc99-elf.a(__int_vsprintf.XX_o)
+                  0x000268          0x6 f:/bin/bin/../../lib\libc99-elf.a(__int_vsprintf.XX_o)
  __c30_signature
-                  0x000211          0x6 f:/bin/bin/../../lib\libc99-elf.a(__printf_core.XX_o)
+                  0x00026e          0x6 f:/bin/bin/../../lib\libc99-elf.a(__printf_core.XX_o)
  __c30_signature
-                  0x000217          0x6 f:/bin/bin/../../lib\libc99-elf.a(memcpy.XX_o)
+                  0x000274          0x6 f:/bin/bin/../../lib\libc99-elf.a(memcpy.XX_o)
  __c30_signature
-                  0x00021d          0x6 f:/bin/bin/../../lib\libc99-elf.a(memset.XX_o)
+                  0x00027a          0x6 f:/bin/bin/../../lib\libc99-elf.a(memset.XX_o)
  __c30_signature
-                  0x000223          0x6 f:/bin/bin/../../lib\libc99-elf.a(strlen.XX_o)
+                  0x000280          0x6 f:/bin/bin/../../lib\libc99-elf.a(strlen.XX_o)
  __c30_signature
-                  0x000229          0x6 f:/bin/bin/../../lib\libc99-elf.a(__int_vsnprintf.XX_o)
+                  0x000286          0x6 f:/bin/bin/../../lib\libc99-elf.a(__int_vsnprintf.XX_o)
  __c30_signature
-                  0x00022f          0x6 f:/bin/bin/../../lib\libc99-elf.a(__int_vfprintf.XX_o)
+                  0x00028c          0x6 f:/bin/bin/../../lib\libc99-elf.a(__int_vfprintf.XX_o)
  __c30_signature
-                  0x000235          0x6 f:/bin/bin/../../lib\libc99-elf.a(atoi.XX_o)
+                  0x000292          0x6 f:/bin/bin/../../lib\libc99-elf.a(atoi.XX_o)
  __c30_signature
-                  0x00023b          0x6 f:/bin/bin/../../lib\libc99-elf.a(tolower.XX_o)
+                  0x000298          0x6 f:/bin/bin/../../lib\libc99-elf.a(tolower.XX_o)
  __c30_signature
-                  0x000241          0x6 f:/bin/bin/../../lib\libc99-elf.a(toupper.XX_o)
+                  0x00029e          0x6 f:/bin/bin/../../lib\libc99-elf.a(toupper.XX_o)
  __c30_signature
-                  0x000247          0x6 f:/bin/bin/../../lib\libc99-elf.a(__errno_location.XX_lo)
+                  0x0002a4          0x6 f:/bin/bin/../../lib\libc99-elf.a(__errno_location.XX_lo)
  __c30_signature
-                  0x00024d          0x6 f:/bin/bin/../../lib\libc99-elf.a(__pop_float.XX_lo)
+                  0x0002aa          0x6 f:/bin/bin/../../lib\libc99-elf.a(__pop_float.XX_lo)
  __c30_signature
-                  0x000253          0x6 f:/bin/bin/../../lib\libc99-elf.a(__pop_int.XX_lo)
+                  0x0002b0          0x6 f:/bin/bin/../../lib\libc99-elf.a(__pop_int.XX_lo)
  __c30_signature
-                  0x000259          0x6 f:/bin/bin/../../lib\libc99-elf.a(__pop_ptr.XX_lo)
+                  0x0002b6          0x6 f:/bin/bin/../../lib\libc99-elf.a(__pop_ptr.XX_lo)
  __c30_signature
-                  0x00025f          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
+                  0x0002bc          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(extendsfdf.XX_o)
  __c30_signature
-                  0x000265          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+                  0x0002c2          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
  __c30_signature
-                  0x00026b          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
+                  0x0002c8          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(mulsi3.XX_o)
  __c30_signature
-                  0x000271          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(divmoddi3.XX_o)
+                  0x0002ce          0x6 f:/bin/bin/../../lib\libc99-pic30-elf.a(divmoddi3.XX_o)
 
 .nbss               0x0800          0x2
  .nbss              0x0800          0x2 build/default/production/main.o
@@ -1494,33 +1504,38 @@ __c30_signature
  .ivt._T1Interrupt
                   0x00001a          0x2 build/default/production/main.o
 
-.const              0x908e         0x4e load address 0x00108e  
- .const             0x908e         0x4a build/default/production/main.o
- .const             0x90d8          0x4 build/default/production/LCD.o
+.const              0x908e         0x8c load address 0x00108e  
+ .const             0x908e         0x88 build/default/production/main.o
+ .const             0x9116          0x4 build/default/production/LCD.o
 
-.text             0x0010dc        0x5b6
- .text            0x0010dc        0x3e8 build/default/production/main.o
-                  0x0010dc                  _initTimer1
-                  0x001168                  _initTimer2
-                  0x0011f4                  _initAdc1
-                  0x00120a                  _calcDutyPwm
-                  0x00123e                  _leerAdc
-                  0x00126a                  _calcularTProm
-                  0x00129a                  _incrementar
-                  0x0012a6                  _Mode
-                  0x00133a                  _main
- .text            0x0014c4        0x1ce build/default/production/LCD.o
-                  0x0014c4                  _sendData
-                  0x0015be                  _onLcd
-                  0x0015d8                  _initLcd
-                  0x0015f2                  _clearLcd
-                  0x0015fe                  _goTo
-                  0x00163e                  _sendStr
-                  0x001672                  _sendNum
+.text             0x00111a        0x8a4
+ .text            0x00111a        0x6d6 build/default/production/main.o
+                  0x00111a                  _initTimer1
+                  0x0011a6                  _initTimer2
+                  0x001232                  _initTimer3
+                  0x0012be                  _initTimer4
+                  0x00132e                  _initAdc1
+                  0x001344                  _initPwm
+                  0x001368                  _cambiarDuty
+                  0x001378                  _calcDutyPwm
+                  0x0013ac                  _leerAdc
+                  0x0013d8                  _calcularTProm
+                  0x001408                  _incrementar
+                  0x001414                  _incrementarColor
+                  0x001456                  _Mode
+                  0x0015a0                  _main
+ .text            0x0017f0        0x1ce build/default/production/LCD.o
+                  0x0017f0                  _sendData
+                  0x0018ea                  _onLcd
+                  0x001904                  _initLcd
+                  0x00191e                  _clearLcd
+                  0x00192a                  _goTo
+                  0x00196a                  _sendStr
+                  0x00199e                  _sendNum
 
-.dinit            0x001692         0x28
- .dinit           0x001692         0x28 data_init
+.dinit            0x0019be         0x28
+ .dinit           0x0019be         0x28 data_init
 
-.init.delay32     0x0016ba         0x1c
- .init.delay32    0x0016ba         0x1c f:/bin/bin/../../lib\libc99-pic30-elf.a(delay32.Meo)
-                  0x0016ba                  ___delay32
+.init.delay32     0x0019e6         0x1c
+ .init.delay32    0x0019e6         0x1c f:/bin/bin/../../lib\libc99-pic30-elf.a(delay32.Meo)
+                  0x0019e6                  ___delay32
