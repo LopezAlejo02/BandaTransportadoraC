@@ -21,12 +21,17 @@
 #include "config.h"
 #include "LCD.h"
 #include <math.h>
+#include <p24FJ64GB002.h>
 
 //Defines
 #define Sensor_metalico PORTAbits.RA1
 #define Sensor_no_metalico PORTAbits.RA2
 #define mode PORTAbits.RA3
-#define CH 0 //Definición del canal de lectura del ADC ANx
+#define CH 0 //Definici?n del canal de lectura del ADC ANx
+#define Sentido_banda PORTAbits.RA4
+#define Pwm_izquierda PORTBbits.RB7
+#define Pwm_derecha PORTBbits.RB8
+
 //#define lectura_color 
 #define S2 PORTBbits.RB13
 #define S3 PORTBbits.RB14
@@ -48,7 +53,7 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void){
 //    IFS0bits.OC1IF = 0;
 //}
 
-//Funciones de configuración de periféricos
+//Funciones de configuraci?n de perif?ricos
 
 void initTimer1(int prescaler, int periodo, int interrupcion){
         int presc_select = 0b00;
@@ -65,12 +70,12 @@ void initTimer1(int prescaler, int periodo, int interrupcion){
             presc_select = 0b11;
         }
         T1CONbits.TON = 0; // Apagar el timer 1
-        T1CONbits.TCS = 0; //Selección del oscilador interno como fuente
-        T1CONbits.TCKPS = presc_select; //Configuración del prescaler 
+        T1CONbits.TCS = 0; //Selecci?n del oscilador interno como fuente
+        T1CONbits.TCKPS = presc_select; //Configuraci?n del prescaler 
         TMR1 = 0; //Limpiar el registro del timer
         PR1 = periodo; //Fijamos el valor del periodo para que el timer cuente hasta la variable "periodo"
         IFS0bits.T1IF = 0; //Bandera de timer a cero
-        IEC0bits.T1IE = interrupcion; //Habilitación de la interrupción
+        IEC0bits.T1IE = interrupcion; //Habilitaci?n de la interrupci?n
         T1CONbits.TON = 1; // Encender el timer 1
 }
 
@@ -89,12 +94,12 @@ void initTimer2(int prescaler, int periodo, int interrupcion){
             presc_select = 0b11;
         }
         T2CONbits.TON = 0; // Apagar el timer 2
-        T2CONbits.TCS = 0; //Selección del oscilador interno como fuente
-        T2CONbits.TCKPS = presc_select; //Configuración del prescaler 
+        T2CONbits.TCS = 0; //Selecci?n del oscilador interno como fuente
+        T2CONbits.TCKPS = presc_select; //Configuraci?n del prescaler 
         TMR2 = 0; //Limpiar el registro del timer
         PR2 = periodo; //Fijamos el valor del periodo para que el timer cuente hasta la variable "periodo"
         IFS0bits.T2IF = 0; //Bandera de timer a cero
-        IEC0bits.T2IE = interrupcion; //Habilitación de la interrupción
+        IEC0bits.T2IE = interrupcion; //Habilitaci?n de la interrupci?n
         T2CONbits.TON = 1; // Encender el timer 2
 }
 
@@ -113,12 +118,12 @@ void initTimer3(int prescaler, int periodo, int interrupcion){
             presc_select = 0b11;
         }
         T3CONbits.TON = 0; // Apagar el timer 3
-        T3CONbits.TCS = 0; //Selección del oscilador interno como fuente
-        T3CONbits.TCKPS = presc_select; //Configuración del prescaler 
+        T3CONbits.TCS = 0; //Selecci?n del oscilador interno como fuente
+        T3CONbits.TCKPS = presc_select; //Configuraci?n del prescaler 
         TMR3 = 0; //Limpiar el registro del timer
         PR3 = periodo; //Fijamos el valor del periodo para que el timer cuente hasta la variable "periodo"
         IFS0bits.T3IF = 0; //Bandera de timer a cero
-        IEC0bits.T3IE = interrupcion; //Habilitación de la interrupción
+        IEC0bits.T3IE = interrupcion; //Habilitaci?n de la interrupci?n
         T3CONbits.TON = 1; // Encender el timer 3
 }
 
@@ -137,16 +142,16 @@ void initTimer4(int prescaler, int periodo){
         presc_select = 0b11;
     }
     T4CONbits.TON = 0; // Apagar el timer 2
-    T4CONbits.TCS = 0; //Selección del oscilador interno como fuente
-    T4CONbits.TCKPS = presc_select; //Configuración del prescaler 
+    T4CONbits.TCS = 0; //Selecci?n del oscilador interno como fuente
+    T4CONbits.TCKPS = presc_select; //Configuraci?n del prescaler 
     TMR4 = 0; //Limpiar el registro del timer
     PR4 = periodo; //Fijamos el valor del periodo para que el timer cuente hasta la variable "periodo"
     T4CONbits.TON = 1; // Encender el timer 2
 }
 
 void initAdc1(){
-    AD1PCFG = 0b1111111111111110; //Se seleccionan los pines analógicos
-    AD1CON1 = 0; //Se selecciona el control manual de la secuencia de conversión
+    AD1PCFG = 0b1111111111111110; //Se seleccionan los pines anal?gicos
+    AD1CON1 = 0; //Se selecciona el control manual de la secuencia de conversi?n
     AD1CSSL = 0; //No se requiere scaneo
     AD1CON2 = 0; //Se selecciona el MUX A, y AVss y AVdd son usados como Vref+/-
     AD1CON3 = 0x1F01; //Se selecciona el Tad = 2* Tcy (Tad > 75ns)
@@ -165,10 +170,26 @@ void initPwm(void)
     OC1R = 1000;
     // OC1TMR 0; 
     OC1TMR = 0x00;
-    RPOR7bits.RP15R = 0x0012;    //RB15->OC1:OC1
+    //RPOR4bits.RP9R = 0x0012;    //RB9->OC1:OC1
+    RPOR4bits.RP8R = 0x0012;    //RB8->OC1:OC1
+    //RPOR3bits.RP7R = 0x0012;    //RB7->OC1:OC1
+    //RPOR7bits.RP15R = 0x0012;    //RB15->OC1:OC1
 }
 
 //Funciones generales
+
+void cambiarSentidoBanda(int sentido){
+    if(sentido == 1){
+        RPOR3bits.RP7R = 0x0000;    //RB7->NULL
+        __delay_ms(1000);
+        RPOR4bits.RP8R = 0x0012;    //RB8->OC1:OC1
+    }
+    else{
+        RPOR4bits.RP8R = 0x0000;    //RB7->NULL
+        __delay_ms(1000);
+        RPOR3bits.RP7R = 0x0012;    //RB8->OC1:OC1
+    }
+}
 
 void cambiarDuty(int duty){
     
@@ -176,7 +197,7 @@ void cambiarDuty(int duty){
 }
 
 long calcDutyPwm(long val){
-    long resolucion = 1023; //La resolucion verdadera es 1024, pero se fija en 1023 para que el duty cycle pueda ser 100%, si se deja en 1024 el duty cycle máximo es de 99%
+    long resolucion = 1023; //La resolucion verdadera es 1024, pero se fija en 1023 para que el duty cycle pueda ser 100%, si se deja en 1024 el duty cycle m?ximo es de 99%
     return (long)((val*100)/resolucion);
 }
 
@@ -186,9 +207,9 @@ int leerAdc(int an){
     TMR2 = 0; //Resetea el contador del timer 2
     IFS0bits.T2IF = 0; //Pone la bandera del timer 2 en 0
     while(!IFS0bits.T2IF); //Espera hasta que la bandera del timer 2 se ponga en 1 (cuenta hasta 6.25us)
-    AD1CON1bits.SAMP = 0; //Empieza la conversión
-    while(!AD1CON1bits.DONE); //Espera hasta que la conversión se complete
-    return ADC1BUF0; //Retorna el valor de la conversión
+    AD1CON1bits.SAMP = 0; //Empieza la conversi?n
+    while(!AD1CON1bits.DONE); //Espera hasta que la conversi?n se complete
+    return ADC1BUF0; //Retorna el valor de la conversi?n
 }
 
 int calcularTProm(int tiempo_promedio, int total_objetos, int tiempo_tramo){
@@ -197,7 +218,7 @@ int calcularTProm(int tiempo_promedio, int total_objetos, int tiempo_tramo){
 }
 
 int incrementar(int numero){
-    numero++; //incrementa el número
+    numero++; //incrementa el n?mero
     return numero;
 }
 
@@ -229,6 +250,13 @@ void incrementarColor(int periodo, int periodo_ref_rojo, int periodo_ref_azul, i
             objetos_rojos++;
         }
     }
+}
+
+void sendVoltaje(int lec_adc){
+    float voltaje = ((3.3/1023)*(lec_adc));
+    char buf[100]; //Crea un buffer para almacenar la conversión del numero a ascii
+    sprintf(buf, "%0.3f", voltaje); //Convierte el número recibido a ascii
+    sendStr(buf);
 }
 
 void Mode(int mod, int num_metalicos, int num_no_metalicos, int total_objetos, int tiempo_promedio, int dutyCycle, int lec_adc){
@@ -264,7 +292,7 @@ void Mode(int mod, int num_metalicos, int num_no_metalicos, int total_objetos, i
        goTo(1,1);
        __delay_ms(1);
        sendStr("Lectura ADC: ");
-       sendNum(lec_adc);
+       sendVoltaje(lec_adc);
        __delay_ms(2);
        goTo(2,1);
        __delay_ms(1);
@@ -293,11 +321,12 @@ void Mode(int mod, int num_metalicos, int num_no_metalicos, int total_objetos, i
 }
 
 int main() {
-    //Configuración de puertos
+    //Configuraci?n de puertos
         AD1PCFG = 0b1111111111111110; //Todo como digital
         TRISB = 0b1000000000000000; // Puerto B como salidas menos RB13
         TRISA = 1; // Puerto A como entradas
-    //Configuración de periféricos
+
+    //Configuraci?n de perif?ricos
         //Timer1 cuenta hasta 1s
           initTimer1(64, 62500, 1);
         //Timer cuenta hasta 6.25us
@@ -312,17 +341,19 @@ int main() {
           initAdc1();
         //PWM
           initPwm();
-    //Configuración de dispositivos adicionales
+    //Configuraci?n de dispositivos adicionales
         //LCD
+        clearLcd();
         onLcd();
         initLcd();
     
-    //Declaración de variables
+    //Declaraci?n de variables
         int num_metalicos = 0;
         int num_no_metalicos = 0;
         int mod = 0;
-        int total_objetos;
-        int tiempo_promedio;
+        int sentido = 1;
+        int total_objetos = 0;
+        int tiempo_promedio = 0;
         int lec_adc;
         long dutyCycle;
         long periodo = 0;
@@ -330,23 +361,28 @@ int main() {
         long periodo_ref_azul = 0;
         long periodo_ref_verde = 0;
     //Bienvenida
-        __delay_ms(1000);
         goTo(1,4);
         sendStr("Bienvenido");
         goTo(2,4);
         sendStr("al sistema");
         __delay_ms(1000);
         clearLcd();
-        __delay_ms(1000);
-        goTo(1,2);
-        sendStr("Sincronizando.");
+        goTo(1,4);
+        sendStr("Calibrando");
         goTo(2,7);
-        sendStr("....");
         //periodo_ref_rojo = initPeriodo(0,0);
+        __delay_ms(100);
+        sendStr(".");
         __delay_ms(100);
         //periodo_ref_azul = initPeriodo(0,1);
         __delay_ms(100);
+        sendStr(".");
+        __delay_ms(100);
         //periodo_ref_verde = initPeriodo(1,0);
+        __delay_ms(100);
+        sendStr(".");
+        __delay_ms(100);
+        sendStr(".");
         __delay_ms(100);
         clearLcd();
         goTo(1,1);
@@ -398,6 +434,11 @@ int main() {
             }
            Mode(mod, num_metalicos, num_no_metalicos, total_objetos, tiempo_promedio, dutyCycle, lec_adc);
         }
+        if(Sentido_banda){
+            while(Sentido_banda);
+            sentido = !sentido;
+            cambiarSentidoBanda(sentido);
+        }
         if(mod == 1){
            goTo(1,13);
            sendNum(tiempo_promedio);
@@ -408,10 +449,11 @@ int main() {
         }
         if(mod == 2){
            goTo(1,13);
-           sendNum(lec_adc);
+           sendVoltaje(lec_adc);
            sendStr("  ");
            goTo(2,12);
            sendNum(dutyCycle);
+           sendStr("%");
            sendStr("  ");
         }
         if(mod == 3){

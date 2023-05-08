@@ -12,22 +12,22 @@
 
 // CONFIG3
 #pragma config WPFP = WPFP63            // Write Protection Flash Page Segment Boundary (Highest Page (same as page 42))
-#pragma config SOSCSEL = SOSC           // Secondary Oscillator Pin Mode Select (SOSC pins in Default (high drive-strength) Oscillator Mode) (IO to enable pins to digital output and input) ****
+#pragma config SOSCSEL = IO           // Secondary Oscillator Pin Mode Select (SOSC pins in Default (high drive-strength) Oscillator Mode) (IO to enable pins to digital output and input) ****
 #pragma config WUTSEL = LEG             // Voltage Regulator Wake-up Time Select (Default regulator start-up time used)
 #pragma config WPDIS = WPDIS            // Segment Write Protection Disable (Segmented code protection disabled)
 #pragma config WPCFG = WPCFGDIS         // Write Protect Configuration Page Select (Last page and Flash Configuration words are unprotected)
 #pragma config WPEND = WPENDMEM         // Segment Write Protection End Page Select (Write Protect from WPFP to the last page of memory)
 
 // CONFIG2
-#pragma config POSCMOD = XT             // Primary Oscillator Select (XT Oscillator mode selected)
-#pragma config I2C1SEL = PRI            // I2C1 Pin Select bit (Use default SCL1/SDA1 pins for I2C1 )
-#pragma config IOL1WAY = ON             // IOLOCK One-Way Set Enable (Once set, the IOLOCK bit cannot be cleared)
-#pragma config OSCIOFNC = OFF           // OSCO Pin Configuration (OSCO pin functions as clock output (CLKO)) (ON->OSCO pin functions as port I/O (RA3)) ****
-#pragma config FCKSM = CSDCMD           // Clock Switching and Fail-Safe Clock Monitor (Sw Disabled, Mon Disabled)
-#pragma config FNOSC = PRI              // Initial Oscillator Select (Primary Oscillator (XT, HS, EC))
+#pragma config POSCMOD = NONE           //Primary Oscillator Select->Primary Oscillator disabled
+#pragma config I2C1SEL = PRI            //I2C1 Pin Select bit (Use default SCL1/SDA1 pins for I2C1 )
+#pragma config IOL1WAY = ON             //IOLOCK One-Way Set Enable (Once set, the IOLOCK bit cannot be cleared)
+#pragma config OSCIOFNC = ON            //OSCO Pin Configuration->OSCO pin functions as port I/O (RA3)
+#pragma config FCKSM = CSDCMD           //Clock Switching and Fail-Safe Clock Monitor (Sw Disabled, Mon Disabled)
+#pragma config FNOSC = FRCDIV           //Initial Oscillator Select->Fast RC Oscillator with Postscaler (FRCDIV)
 #pragma config PLL96MHZ = ON            // 96MHz PLL Startup Select (96 MHz PLL Startup is enabled automatically on start-up)
 #pragma config PLLDIV = DIV12           // USB 96 MHz PLL Prescaler Select (Oscillator input divided by 12 (48 MHz input))
-#pragma config IESO = ON                // Internal External Switchover (IESO mode (Two-Speed Start-up) enabled)
+#pragma config IESO = ON               //Internal External Switchover->IESO mode (Two-Speed Start-up) disabled
 
 // CONFIG1
 #pragma config WDTPS = PS32768          // Watchdog Timer Postscaler (1:32,768)
@@ -37,7 +37,7 @@
 #pragma config ICS = PGx1               // Emulator Pin Placement Select bits (Emulator functions are shared with PGEC1/PGED1)
 #pragma config GWRP = OFF               // General Segment Write Protect (Writes to program memory are allowed)
 #pragma config GCP = OFF                // General Segment Code Protect (Code protection is disabled)
-#pragma config JTAGEN = ON              // JTAG Port Enable (JTAG port is enabled)
+#pragma config JTAGEN = OFF              // JTAG Port Enable (JTAG port is enabled)
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.

@@ -52,7 +52,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="CLKPinsOutput"/>
-         <value>enabled</value>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="CLOCK_FOSC"/>
@@ -324,7 +324,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="SCLKPinsInput"/>
-         <value>enabled</value>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="SOSCPinsInput"/>
@@ -353,6 +353,10 @@
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="UseSosc"/>
          <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="customClkOut"/>
+         <value>OSCO pin functions as port I/O (RA3)</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="customMasterSlaveViewerEnable"/>
@@ -4224,7 +4228,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="System Module" registerAlias="CONFIG2"/>
-         <value>32695</value>
+         <value>32663</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="System Module" registerAlias="CONFIG3"/>
@@ -4288,7 +4292,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="System Module" registerAlias="CONFIG2" settingAlias="OSCIOFCN"/>
-         <value>OFF</value>
+         <value>ON</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="System Module" registerAlias="CONFIG2" settingAlias="PLL96MHZ"/>
@@ -4367,5 +4371,58 @@
          <value>disabled</value>
       </entry>
    </tokenMap>
-   <generatedFileHashHistoryMap class="java.util.TreeMap"/>
+   <generatedFileHashHistoryMap class="java.util.HashMap">
+      <entry>
+         <file>mcc_generated_files\interrupt_manager.h</file>
+         <hash>fa0d9be36f7a4fed9fe0556b185b249767175a900f80cb61669612a6bde1a8e5</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\mcc.h</file>
+         <hash>dbb94a42fd9941a987067e2fc62bd94fee6a73000f03a0bc23d1416708413416</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\clock.c</file>
+         <hash>bb873b3be946c2b808024568843886797a8408c87ae4d1d099b199ba7bfa8c4c</hash>
+      </entry>
+      <entry>
+         <file>main.c</file>
+         <hash>811c7d26b1b720cda85cf0eb41c85f438639443f7f3c5746981166c1e416f99a</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\pin_manager.h</file>
+         <hash>0100081517d439498c6230f36ab665ec1987c92ed95a9af4a72caa379d8c9b68</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\system.h</file>
+         <hash>36224ae4b89c5df23cbefe54ff4c3f5c77132cc336fd58725fdeededa710a5b0</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\pin_manager.c</file>
+         <hash>068b487b1392ab2e311bc20d49d812dcaf2d216e0f9adbe812a4cbaec3215a8c</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\system.c</file>
+         <hash>10d405af92e4b720871d369c02e1a5bb37603a6677d84bcdb2042d4b5cf366f0</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\traps.c</file>
+         <hash>3a7dd2c3678ba770934028dc9ef99922fbda3be8ed7b9727594d71cd4fb8d608</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\traps.h</file>
+         <hash>c92574be471c7d0617937b63630201e4bfee5ed5f7e4c9d4c82fe518bec9b059</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\clock.h</file>
+         <hash>247a6730c1e4ec841a019971f8187bd794efc611764a54fee6522d1d6719b9ae</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\interrupt_manager.c</file>
+         <hash>e14a89a6c3cc7daf10dfe0f4521dfa06dc2350015051b460cd61ed9c20873c36</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\mcc.c</file>
+         <hash>8b52c8709fe52dd99fbc4e8ac7c96ce107a379e56eafdb43af80e76e9957bb9f</hash>
+      </entry>
+   </generatedFileHashHistoryMap>
 </config>
