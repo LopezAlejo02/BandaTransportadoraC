@@ -254,12 +254,12 @@ void incrementarColor(int periodo, int periodo_ref_rojo, int periodo_ref_azul, i
 
 void sendVoltaje(int lec_adc){
     float voltaje = ((3.3/1023)*(lec_adc));
-    char buf[100]; //Crea un buffer para almacenar la conversión del numero a ascii
-    sprintf(buf, "%0.3f", voltaje); //Convierte el número recibido a ascii
+    char buf[100]; //Crea un buffer para almacenar la conversi?n del numero a ascii
+    sprintf(buf, "%0.3f", voltaje); //Convierte el n?mero recibido a ascii
     sendStr(buf);
 }
 
-void Mode(int mod, int num_metalicos, int num_no_metalicos, int total_objetos, int tiempo_promedio, int dutyCycle, int lec_adc){
+void Mode(int mod, int num_metalicos, int num_no_metalicos, int total_objetos, int tiempo_promedio, int dutyCycle, int lec_adc, int rojos, int azules, int verdes){
     if(mod == 0){
        clearLcd();
        goTo(1,1);
@@ -306,17 +306,16 @@ void Mode(int mod, int num_metalicos, int num_no_metalicos, int total_objetos, i
        __delay_ms(2);
        clearLcd();
        goTo(1,1);
-       __delay_ms(1);
-       sendStr("Frec.: ");
-       sendNum(tiempo_promedio);
+       sendStr("Red: ");
+       sendNum(rojos);
        __delay_ms(2);
-       goTo(2,1);
+       goTo(1,9);
+       sendStr("Blue: ");
+       sendNum(azules);
        __delay_ms(1);
-       sendStr("Test: ");
-       __delay_ms(1);
-       goTo(2,12);
-       __delay_ms(1);
-       sendNum(total_objetos);
+       goTo(2,5);
+       sendStr("Green: ");
+       sendNum(verdes);
     }
 }
 
@@ -350,6 +349,9 @@ int main() {
     //Declaraci?n de variables
         int num_metalicos = 0;
         int num_no_metalicos = 0;
+        int rojos = 0;
+        int azules = 0;
+        int verdes = 0;
         int mod = 0;
         int sentido = 1;
         int total_objetos = 0;
@@ -432,7 +434,7 @@ int main() {
             if(mod == 4){
                 mod = 0;
             }
-           Mode(mod, num_metalicos, num_no_metalicos, total_objetos, tiempo_promedio, dutyCycle, lec_adc);
+           Mode(mod, num_metalicos, num_no_metalicos, total_objetos, tiempo_promedio, dutyCycle, lec_adc, rojos, azules, verdes);
         }
         if(Sentido_banda){
             while(Sentido_banda);
@@ -457,13 +459,19 @@ int main() {
            sendStr("  ");
         }
         if(mod == 3){
-           goTo(1,8);
-           sendNum(periodo);
-           sendStr("  ");
+           goTo(1,6);
+           sendNum(rojos);
+           sendStr(" ");
+           goTo(1,15);
+           sendNum(azules);           
+           sendStr(" ");
            goTo(2,12);
-           sendNum(segundos);
+           sendNum(verdes);
            sendStr("  ");
         }
     }
         return 0;
 }
+
+//Red: -- Blue: --
+//    Green: -- 
