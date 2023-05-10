@@ -35,6 +35,7 @@
 //#define lectura_color 
 #define S2 PORTBbits.RB13
 #define S3 PORTBbits.RB14
+#define lectura_color PORTBbits.RB15
 
 //Variables globales
 int segundos = 0;
@@ -222,27 +223,27 @@ int incrementar(int numero){
     return numero;
 }
 
-//long leerColor(int num_muestras){
-//    T4CONbits.TON = 1;
-//    long periodo = 0;
-//    int i = 0;
-//    while(!(i == num_muestras)){
-//        if(lectura_color){
-//            while(lectura_color);
-//            periodo += TMR4;
-//            TMR4 = 0;
-//            i++;
-//        }
-//    }
-//    T4CONbits.TON = 0;
-//    return (long)(periodo/num_muestras);
-//}
-//
-//int initPeriodo(int S_2, int S_3){
-//    S2 = S_2;
-//    S3 = S_3;    
-//    return leerColor(100);
-//}
+long leerPeriodo(int num_muestras){
+    T4CONbits.TON = 1;
+    long periodo = 0;
+    int i = 0;
+    while(!(i == num_muestras)){
+        if(lectura_color){
+            while(lectura_color);
+            periodo += TMR4;
+            TMR4 = 0;
+            i++;
+        }
+    }
+    T4CONbits.TON = 0;
+    return (long)(periodo/num_muestras);
+}
+
+int leerColor(int S_2, int S_3){
+    S2 = S_2;
+    S3 = S_3;    
+    return leerPeriodo(100);
+}
 
 void incrementarColor(int periodo, int periodo_ref_rojo, int periodo_ref_azul, int periodo_ref_verde, int objetos_rojos){
     if((periodo_ref_rojo - periodo)>(periodo_ref_azul - periodo)){
@@ -358,7 +359,9 @@ int main() {
         int tiempo_promedio = 0;
         int lec_adc;
         long dutyCycle;
-        long periodo = 0;
+        long periodo_rojo = 0;
+        long periodo_azul = 0;
+        long periodo_verde = 0;
         long periodo_ref_rojo = 0;
         long periodo_ref_azul = 0;
         long periodo_ref_verde = 0;
@@ -372,15 +375,15 @@ int main() {
         goTo(1,4);
         sendStr("Calibrando");
         goTo(2,7);
-        //periodo_ref_rojo = initPeriodo(0,0);
+        //periodo_ref_rojo = leerColor(0,0);
         __delay_ms(100);
         sendStr(".");
         __delay_ms(100);
-        //periodo_ref_azul = initPeriodo(0,1);
+        //periodo_ref_azul = leerColor(0,1);
         __delay_ms(100);
         sendStr(".");
         __delay_ms(100);
-        //periodo_ref_verde = initPeriodo(1,0);
+        //periodo_ref_verde = leerColor(1,0);
         __delay_ms(100);
         sendStr(".");
         __delay_ms(100);
@@ -398,15 +401,21 @@ int main() {
         lec_adc = leerAdc(CH);
         dutyCycle = calcDutyPwm(lec_adc);
         cambiarDuty(dutyCycle);
-//        if(dutyCycle > 50){
-//            cambiarDuty(1800);
-//        }
-//        else{
-//            cambiarDuty(400);
-//        }
         if(Sensor_metalico == 1){  
-            //periodo = leerColor(100);
+            periodo_rojo = leerColor(0,0);
+            periodo_azul = leerColor(0,1);
+            periodo_verde = leerColor(1,1);
             while(Sensor_metalico);
+
+            if(((periodo_verde >= 0)&&(periodo_verde <= 2074))&&((periodo_rojo >= 860)&&(periodo_rojo <= 1422))&&((periodo_azul >= 0)&&(periodo_azul <= 620))){
+                verdes++;
+            }
+            else if(((periodo_verde >= 2075)&&(periodo_verde <= 3186))&&((periodo_rojo >= 1423))&&((periodo_azul >= 2171))){
+                azules++;
+            }
+            else if(((periodo_verde >= 3187))&&((periodo_rojo >= 0)&&(periodo_rojo <= 859))&&((periodo_azul >= 621)&&(periodo_azul <= 2170))){
+                rojos++;
+            }
             num_metalicos = incrementar(num_metalicos);
             total_objetos = incrementar(total_objetos);
             tiempo_promedio = calcularTProm(tiempo_promedio, total_objetos, segundos);
@@ -417,8 +426,19 @@ int main() {
             }
         }
         else if(Sensor_no_metalico == 1){
-            //periodo = leerColor(100);
+            periodo_rojo = leerColor(0,0);
+            periodo_azul = leerColor(0,1);
+            periodo_verde = leerColor(1,1);
             while(Sensor_no_metalico);
+            if(((periodo_verde >= 401)&&(periodo_verde <= 948))&&((periodo_rojo >= 1039)&&(periodo_rojo <= 2449))&&((periodo_azul >= 2856)&&(periodo_azul <= 3216))){
+                verdes++;
+            }
+            else if(((periodo_verde >= 661)&&(periodo_verde <= 3744))&&((periodo_rojo >= 2430)&&(periodo_rojo <= 2761))&&((periodo_azul >= 2949)&&(periodo_azul <= 3261))){
+                azules++;
+            }
+            else if(((periodo_verde >= 1005)&&(periodo_verde <= 1273))&&((periodo_rojo >= 990)&&(periodo_rojo <= 1622))&&((periodo_azul >= 3123)&&(periodo_azul <= 3156))){
+                rojos++;
+            }
             num_no_metalicos= incrementar(num_no_metalicos);
             total_objetos = incrementar(total_objetos);
             tiempo_promedio = calcularTProm(tiempo_promedio, total_objetos, segundos);
